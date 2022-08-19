@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import TaskCard from "../../components/TaskCard";
@@ -62,7 +63,7 @@ const onDragEnd = (result, columns, setColumns) => {
   }
 };
 
-export default function Board() {
+export default function BoardView() {
   const [columns, setColumns] = useState(columnsFromBackend);
   return (
     <>
@@ -82,7 +83,6 @@ export default function Board() {
                 }}
                 key={columnId}
               >
-                <h2>{column.name}</h2>
                 <div style={{ margin: 8 }}>
                   <Droppable droppableId={columnId} key={columnId}>
                     {(provided, snapshot) => {
@@ -99,6 +99,7 @@ export default function Board() {
                             minHeight: 500,
                           }}
                         >
+                          <Typography variant="h6">{column.name}</Typography>
                           {column.items.map((item, index) => {
                             return (
                               <Draggable

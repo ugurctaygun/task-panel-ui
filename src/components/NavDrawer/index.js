@@ -12,7 +12,9 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import Collapse from "@material-ui/core/Collapse";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 
 const drawerWidth = 240;
 
@@ -75,6 +77,7 @@ export default function NavDrawer() {
   const handleDrawerSlide = () => {
     setOpen((current) => !current);
   };
+
   return (
     <Drawer
       variant="permanent"
@@ -83,35 +86,43 @@ export default function NavDrawer() {
         paper: classes.drawerPaper,
       }}
     >
-      <DrawerHeader>
+      <DrawerHeader sx={{ height: 64 }}>
         <IconButton onClick={handleDrawerSlide}>
           {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
         </IconButton>
       </DrawerHeader>
       <Divider />
       <List>
-        {["Panels"].map((text, index) => (
-          <ListItem key={text} disablePadding sx={{ display: "block" }}>
-            <ListItemButton
+        <ListItem disablePadding sx={{ display: "block" }}>
+          <ListItemButton
+            sx={{
+              minHeight: 56,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+          >
+            <ListItemIcon
               sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
               }}
             >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              <DashboardIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Panels"} sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+        </ListItem>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemButton sx={{ pl: 4 }}>
+              <ListItemIcon>
+                <ArrowForwardIosIcon sx={{ scale: "0.6" }} />
               </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary="Starred" />
             </ListItemButton>
-          </ListItem>
-        ))}
+          </List>
+        </Collapse>
       </List>
       <Divider />
       <List>
@@ -131,7 +142,7 @@ export default function NavDrawer() {
                   justifyContent: "center",
                 }}
               >
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <InboxIcon />
               </ListItemIcon>
               <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>

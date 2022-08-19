@@ -1,38 +1,24 @@
 import * as React from "react";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
+import { Tab, Tabs, Box, Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Board from "../../layout/Board";
+import BoardView from "../../layout/BoardView";
 import ReorderIcon from "@mui/icons-material/Reorder";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import PieChartIcon from "@mui/icons-material/PieChart";
+import ListView from "../../layout/ListView";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
+    <div role="tabpanel" hidden={value !== index} {...other}>
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Grid>{children}</Grid>
         </Box>
       )}
     </div>
   );
-}
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
 }
 
 export default function Panel() {
@@ -44,6 +30,11 @@ export default function Panel() {
 
   return (
     <Box sx={{ width: "100%" }}>
+      <Grid sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Typography sx={{ m: 2 }} align="center" variant="h5">
+          Case Study
+        </Typography>
+      </Grid>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
@@ -54,21 +45,16 @@ export default function Panel() {
           <Tab
             icon={<ReorderIcon style={{ transform: "rotate(90deg)" }} />}
             label="Board"
-            {...a11yProps(0)}
           />
-          <Tab
-            icon={<FormatListBulletedIcon />}
-            label="List"
-            {...a11yProps(1)}
-          />
-          <Tab icon={<PieChartIcon />} label="Report" {...a11yProps(2)} />
+          <Tab icon={<FormatListBulletedIcon />} label="List" />
+          <Tab icon={<PieChartIcon />} label="Report" />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <Board />
+        <BoardView />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <ListView />
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three
