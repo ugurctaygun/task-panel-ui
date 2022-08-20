@@ -19,8 +19,8 @@ export default function NavBar() {
     dispatch(updateTheme(userThemePref));
   };
   return (
-    <Box sx={{ display: "flex" }}>
-      <AppBar position="static">
+    <Box sx={{ display: "flex", mb: "64px" }}>
+      <AppBar position="fixed">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Task Panel

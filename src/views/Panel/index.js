@@ -1,64 +1,64 @@
 import * as React from "react";
-import { Tab, Tabs, Box, Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import BoardView from "../../layout/BoardView";
-import ReorderIcon from "@mui/icons-material/Reorder";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import PieChartIcon from "@mui/icons-material/PieChart";
 import ListView from "../../layout/ListView";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div role="tabpanel" hidden={value !== index} {...other}>
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Grid>{children}</Grid>
-        </Box>
-      )}
-    </div>
-  );
-}
+const renderViews = (view) => {
+  switch (view) {
+    case "Board":
+      return <BoardView />;
+    case "List":
+      return <ListView />;
+    case "Report":
+      <BoardView />;
+      break;
+    default:
+      break;
+  }
+};
 
 export default function Panel() {
-  const [value, setValue] = React.useState(0);
+  const [view, setView] = React.useState("Board");
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleViewChange = (event) => {
+    setView(event.target.value);
   };
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Grid sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Typography sx={{ m: 2 }} align="center" variant="h5">
+      <Grid
+        sx={{
+          borderBottom: 1,
+          borderColor: "divider",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <FormControl sx={{ m: 1, minWidth: 120, pl: 3 }} size="small">
+          <Select
+            value={view}
+            onChange={handleViewChange}
+            displayEmpty
+            inputProps={{ "aria-label": "Without label" }}
+          >
+            <MenuItem value={"Board"} sx={{ display: "flex" }}>
+              Board View
+            </MenuItem>
+            <MenuItem value={"List"}>List View</MenuItem>
+            <MenuItem value={"Report"}>Report</MenuItem>
+          </Select>
+        </FormControl>
+        <Typography sx={{ m: 2, color: "text.primary" }} variant="h5">
           Case Study
         </Typography>
       </Grid>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="Panel Tabs"
-          centered
-        >
-          <Tab
-            icon={<ReorderIcon style={{ transform: "rotate(90deg)" }} />}
-            label="Board"
-          />
-          <Tab icon={<FormatListBulletedIcon />} label="List" />
-          <Tab icon={<PieChartIcon />} label="Report" />
-        </Tabs>
+      <Box sx={{ borderBottom: 1, borderColor: "divider", p: 4 }}>
+        {renderViews(view)}
       </Box>
-      <TabPanel value={value} index={0}>
-        <BoardView />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <ListView />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
     </Box>
   );
 }

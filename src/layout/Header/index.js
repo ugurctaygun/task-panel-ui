@@ -1,11 +1,11 @@
 import NavBar from "../../components/NavBar";
 import NavDrawer from "../../components/NavDrawer";
 
-export default function Header() {
+export default function Header({ handleDrawer }) {
   return (
     <>
       <NavBar />
-      <NavDrawer />
+      <NavDrawer handleDrawer={handleDrawer} />
     </>
   );
 }

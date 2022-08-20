@@ -11,27 +11,20 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import Collapse from "@material-ui/core/Collapse";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 
 const drawerWidth = 240;
 
-const openedMixin = (theme) => ({
+const openedMixin = (_theme) => ({
   width: drawerWidth,
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
+  transition: "0.2s all ease",
   overflowX: "hidden",
 });
 
 const closedMixin = (theme) => ({
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
+  transition: "0.2s all ease",
   overflowX: "hidden",
   width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up("sm")]: {
@@ -70,12 +63,13 @@ const useStyles = makeStyles({
   },
 });
 
-export default function NavDrawer() {
+export default function NavDrawer({ handleDrawer }) {
   const [open, setOpen] = React.useState(true);
   const classes = useStyles();
 
   const handleDrawerSlide = () => {
     setOpen((current) => !current);
+    handleDrawer();
   };
 
   return (
@@ -125,30 +119,6 @@ export default function NavDrawer() {
         </Collapse>
       </List>
       <Divider />
-      <List>
-        {["Alerts"].map((text, index) => (
-          <ListItem key={text} disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
     </Drawer>
   );
 }
