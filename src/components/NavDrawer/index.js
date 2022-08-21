@@ -65,7 +65,7 @@ const useStyles = makeStyles({
 });
 
 export default function NavDrawer({ handleDrawer }) {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const classes = useStyles();
 
   const handleDrawerSlide = () => {

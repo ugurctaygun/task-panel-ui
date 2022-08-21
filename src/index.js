@@ -8,6 +8,7 @@ import { updateState } from "./store/slices/taskSlice";
 import userReducer from "./store/slices/userSlice";
 import { updateTheme } from "./store/slices/userSlice";
 import App from "./App";
+import { BrowserRouter } from "react-router-dom";
 
 const persistedState = loadState();
 
@@ -36,7 +37,9 @@ store.subscribe(() => {
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </React.StrictMode>
   </Provider>,
   document.getElementById("root")

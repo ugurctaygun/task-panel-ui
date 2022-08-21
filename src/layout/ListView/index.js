@@ -15,10 +15,9 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import { useSelector, useDispatch } from "react-redux";
-import { updateTask } from "../../store/slices/taskSlice";
+import { useSelector } from "react-redux";
 import { Chip } from "@mui/material";
-import TaskModal from "../../components/TaskModal";
+import { useNavigate } from "react-router-dom";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -84,16 +83,12 @@ function TablePaginationActions(props) {
 
 export default function ListView() {
   const tasks = useSelector((state) => state.tasks.value);
-  const dispatch = useDispatch();
-  const [modalOpen, setModalOpen] = useState(false);
+  let navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleModalOpen = () => {
-    setModalOpen(true);
-  };
-  const handleModalClose = () => {
-    setModalOpen(false);
+  const handleModalOpen = (id) => {
+    navigate(`/panel/${id}`);
   };
 
   const emptyRows =
@@ -138,7 +133,11 @@ export default function ListView() {
               : tasks.taskList
             ).map((row) => (
               <>
-                <TableRow key={row.name} onClick={handleModalOpen}>
+                <TableRow
+                  key={row.name}
+                  onClick={() => handleModalOpen(row.taskId)}
+                  style={{ cursor: "pointer" }}
+                >
                   <TableCell>
                     {row.status !== "done" ? (
                       <Chip label="Incomplete" color="error" />

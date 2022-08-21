@@ -1,15 +1,14 @@
 import * as React from "react";
-import { useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import TaskModal from "../TaskModal";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 import { CardActions, CardHeader, IconButton } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import { useNavigate } from "react-router-dom";
 
 export default function TaskCard({ content }) {
-  const [modalOpen, setModalOpen] = useState(false);
+  let navigate = useNavigate();
 
   const formatDate = () => {
     if (content.deadline) {
@@ -24,10 +23,7 @@ export default function TaskCard({ content }) {
     }
   };
   const handleModalOpen = () => {
-    setModalOpen(true);
-  };
-  const handleModalClose = () => {
-    setModalOpen(false);
+    navigate(`/panel/${content.taskId}`);
   };
   const deadlineCondition = () => {
     if (content.deadline && content.status !== "done") {
@@ -45,7 +41,7 @@ export default function TaskCard({ content }) {
               <DragIndicatorIcon />
             </IconButton>
           }
-          title={content.taskId}
+          title={"#" + content.taskId}
           titleTypographyProps={{ variant: "subtitle2" }}
           sx={{ pb: 0 }}
         />
@@ -63,11 +59,6 @@ export default function TaskCard({ content }) {
           </CardActions>
         )}
       </Card>
-      <TaskModal
-        content={content}
-        modalOpen={modalOpen}
-        handleModalClose={handleModalClose}
-      />
     </>
   );
 }
