@@ -13,19 +13,26 @@ export const taskSlice = createSlice({
       state.value = { ...action.payload };
     },
     createTask: (state, action) => {
+      let newId = uuidv4();
       const newTaskObject = {
-        id: uuidv4(),
-        taskId: action.payload,
+        id: newId,
+        taskId: "#CASE-" + newId.substring(0, 4),
         title: "",
         description: "",
         points: 0,
-        status: false,
+        status: "to-do",
+        deadline: null,
       };
       state.value.taskList.push(newTaskObject);
+    },
+    updateTask: (state, action) => {
+      const { id, item, key } = action.payload;
+      let selectedItem = state.value.taskList.find((item) => item.id === id);
+      selectedItem[key] = item[key];
     },
   },
 });
 
-export const { updateState, createTask } = taskSlice.actions;
+export const { updateState, createTask, updateTask } = taskSlice.actions;
 
 export default taskSlice.reducer;

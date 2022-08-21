@@ -4,14 +4,14 @@ import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
-export default function DatePicker() {
+export default function DatePicker({ deadlineHandler, deadline }) {
   const [value, setValue] = React.useState(Date.now());
   const today = new Date();
 
   const handleChange = (newValue) => {
     setValue(newValue);
+    deadlineHandler(newValue);
   };
 
   return (
@@ -19,19 +19,12 @@ export default function DatePicker() {
       <Stack spacing={3}>
         <DesktopDatePicker
           inputFormat="MM/dd/yyyy"
-          value={value}
+          value={deadline ? deadline : value}
           minDate={today}
           onChange={handleChange}
           className="test"
           renderInput={(params) => <TextField {...params} />}
         />
-        {/* <MobileDatePicker
-          label="Date mobile"
-          inputFormat="MM/dd/yyyy"
-          value={value}
-          onChange={handleChange}
-          renderInput={(params) => <TextField {...params} />}
-        /> */}
       </Stack>
     </LocalizationProvider>
   );

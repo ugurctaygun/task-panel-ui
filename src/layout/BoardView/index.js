@@ -1,89 +1,34 @@
 import { Card, Typography, CardActions, Button } from "@mui/material";
-import { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import TaskCard from "../../components/TaskCard";
 import { useSelector, useDispatch } from "react-redux";
-import { createTask, updateState } from "../../store/slices/taskSlice";
+import { createTask, updateTask } from "../../store/slices/taskSlice";
 
 export default function BoardView() {
   const tasks = useSelector((state) => state.tasks.value);
-  console.log(tasks);
   const dispatch = useDispatch();
 
-  const itemsFromBackend = [
-    { id: "task-1", content: "First task" },
-    { id: "task-2", content: "Second task" },
-    { id: "3", content: "Third task" },
-    { id: "4", content: "Fourth task" },
-    { id: "5", content: "Fifth task" },
-  ];
-
-  const columnsFromBackend = {
-    "To Do": {
-      name: "To do",
-      items:
-        tasks.taskList.length > 0
-          ? tasks.taskList.filter((item) => item.status === true)
-          : [],
-      editable: true,
-    },
-    Done: {
-      name: "Done",
-      items:
-        tasks.taskList.length > 0
-          ? tasks.taskList.filter((item) => item.status === false)
-          : [],
-      editable: false,
-    },
-  };
-
-  const onDragEnd = (result, columns, setColumns) => {
+  const onDragEnd = (result) => {
     if (!result.destination) return;
-    const { source, destination } = result;
-
+    const { source, destination, draggableId } = result;
     if (source.droppableId !== destination.droppableId) {
-      const sourceColumn = columns[source.droppableId];
-      const destColumn = columns[destination.droppableId];
-      const sourceItems = [...sourceColumn.items];
-      const destItems = [...destColumn.items];
-      const [removed] = sourceItems.splice(source.index, 1);
-      destItems.splice(destination.index, 0, removed);
-      setColumns({
-        ...columns,
-        [source.droppableId]: {
-          ...sourceColumn,
-          items: sourceItems,
-        },
-        [destination.droppableId]: {
-          ...destColumn,
-          items: destItems,
-        },
-      });
-    } else {
-      const column = columns[source.droppableId];
-      const copiedItems = [...column.items];
-      const [removed] = copiedItems.splice(source.index, 1);
-      copiedItems.splice(destination.index, 0, removed);
-      setColumns({
-        ...columns,
-        [source.droppableId]: {
-          ...column,
-          items: copiedItems,
-        },
-      });
+      dispatch(
+        updateTask({
+          id: draggableId,
+          item: { status: destination.droppableId },
+          key: "status",
+        })
+      );
     }
   };
 
-  const [columns, setColumns] = useState(columnsFromBackend);
   const handleAddTask = () => {
-    dispatch(createTask("test"));
+    dispatch(createTask());
   };
   return (
     <>
       <div style={{ display: "flex", justifyContent: "start", height: "100%" }}>
-        <DragDropContext
-          onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
-        >
+        <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
           <div
             style={{
               display: "flex",
@@ -108,35 +53,37 @@ export default function BoardView() {
                       }}
                     >
                       <Typography
-                        sx={{ ml: 1, color: "text.primary" }}
+                        sx={{ ml: 1, color: "rgba(0, 0, 0, 0.87)" }}
                         variant="h6"
                       >
                         To Do
                       </Typography>
-                      {tasks.taskList.map((item, index) => {
-                        return (
-                          <Draggable
-                            key={item.id}
-                            draggableId={item.id}
-                            index={index}
-                          >
-                            {(provided, snapshot) => {
-                              return (
-                                <div
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                >
-                                  <TaskCard
-                                    content={item.content}
-                                    isDragging={snapshot.isDragging}
-                                  />
-                                </div>
-                              );
-                            }}
-                          </Draggable>
-                        );
-                      })}
+                      {tasks.taskList
+                        .filter((task) => task.status === "to-do")
+                        .map((item, index) => {
+                          return (
+                            <Draggable
+                              key={item.id}
+                              draggableId={item.id}
+                              index={index}
+                            >
+                              {(provided, snapshot) => {
+                                return (
+                                  <div
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                  >
+                                    <TaskCard
+                                      content={item}
+                                      isDragging={snapshot.isDragging}
+                                    />
+                                  </div>
+                                );
+                              }}
+                            </Draggable>
+                          );
+                        })}
                       {provided.placeholder}
                       <CardActions>
                         <Button
@@ -177,13 +124,14 @@ export default function BoardView() {
                       }}
                     >
                       <Typography
-                        sx={{ ml: 1, color: "text.primary" }}
+                        sx={{ ml: 1, color: "rgba(0, 0, 0, 0.87)" }}
                         variant="h6"
                       >
                         Done
                       </Typography>
-                      {tasks.taskList.map((item, index) => {
-                        if (item.status) {
+                      {tasks.taskList
+                        .filter((task) => task.status === "done")
+                        .map((item, index) => {
                           return (
                             <Draggable
                               key={item.id}
@@ -198,7 +146,7 @@ export default function BoardView() {
                                     {...provided.dragHandleProps}
                                   >
                                     <TaskCard
-                                      content={item.content}
+                                      content={item}
                                       isDragging={snapshot.isDragging}
                                     />
                                   </div>
@@ -206,8 +154,7 @@ export default function BoardView() {
                               }}
                             </Draggable>
                           );
-                        }
-                      })}
+                        })}
                       {provided.placeholder}
                     </Card>
                   );
