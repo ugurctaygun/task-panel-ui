@@ -5,6 +5,7 @@ import {
   ListItemIcon,
   ListItemText,
   MenuItem,
+  IconButton,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
@@ -26,15 +27,16 @@ export default function ActionMenu({ handleDelete }) {
 
   return (
     <div>
-      <Button
+      <IconButton
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        sx={{ justifyContent: "flex-end", m: 0, p: 0 }}
       >
         <MenuIcon />
-      </Button>
+      </IconButton>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}

@@ -108,7 +108,7 @@ export default function ListView() {
   return (
     <Box
       sx={{
-        maxWidth: "70%",
+        maxWidth: "700px",
       }}
     >
       <TableContainer
@@ -122,6 +122,7 @@ export default function ListView() {
               <TableCell sx={{ width: "150px" }}>Task ID</TableCell>
               <TableCell>Title</TableCell>
               <TableCell>Description</TableCell>
+              <TableCell>Point</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -147,7 +148,12 @@ export default function ListView() {
                   </TableCell>
                   <TableCell>{row.taskId}</TableCell>
                   <TableCell>{row.title}</TableCell>
-                  <TableCell>{row.description}</TableCell>
+                  <TableCell>
+                    {row.description.length > 50
+                      ? row.description.substring(0, 50) + "..."
+                      : row.description}
+                  </TableCell>
+                  <TableCell>{row.point}</TableCell>
                 </TableRow>
               </>
             ))}
@@ -159,10 +165,9 @@ export default function ListView() {
             )}
           </TableBody>
           <TableFooter>
-            <TableRow>
+            <TableRow sx={{ width: "100%" }}>
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                colSpan={3}
                 count={tasks.taskList.length}
                 rowsPerPage={rowsPerPage}
                 page={page}

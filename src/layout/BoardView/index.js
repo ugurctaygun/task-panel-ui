@@ -27,7 +27,14 @@ export default function BoardView() {
   };
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "start", height: "100%" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "start",
+          height: "100%",
+          overflow: "auto",
+        }}
+      >
         <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
           <div
             style={{
@@ -36,7 +43,7 @@ export default function BoardView() {
               alignItems: "center",
             }}
           >
-            <div style={{ margin: 8 }}>
+            <div style={{ marginRight: "15px" }}>
               <Droppable droppableId={"to-do"}>
                 {(provided, snapshot) => {
                   return (
@@ -107,7 +114,7 @@ export default function BoardView() {
               alignItems: "center",
             }}
           >
-            <div style={{ margin: 8 }}>
+            <div>
               <Droppable droppableId={"done"}>
                 {(provided, snapshot) => {
                   return (

@@ -12,7 +12,7 @@ export default function TaskCard({ content }) {
 
   const formatDate = () => {
     if (content.deadline) {
-      let today = content.deadline.toISOString().slice(0, 10);
+      let today = content.deadline.slice(0, 10);
 
       const startDate = Date.now();
       const endDate = today;
@@ -46,7 +46,7 @@ export default function TaskCard({ content }) {
           sx={{ pb: 0 }}
         />
         <CardContent>
-          <Typography>{content.title}</Typography>
+          <Typography>{content.title ? content.title : "Edit task"}</Typography>
         </CardContent>
         {deadlineCondition() && (
           <CardActions>

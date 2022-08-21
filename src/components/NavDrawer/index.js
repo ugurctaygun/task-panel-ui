@@ -15,6 +15,7 @@ import Collapse from "@material-ui/core/Collapse";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import AddIcon from "@mui/icons-material/Add";
+import { Grid } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -74,57 +75,60 @@ export default function NavDrawer({ handleDrawer }) {
   };
 
   return (
-    <Drawer
-      variant="permanent"
-      open={open}
-      classes={{
-        paper: classes.drawerPaper,
-      }}
-    >
-      <DrawerHeader sx={{ height: 64 }}>
-        <IconButton onClick={handleDrawerSlide}>
-          {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-        </IconButton>
-      </DrawerHeader>
-      <Divider />
-      <List>
-        <ListItem disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 46,
-              justifyContent: open ? "start" : "center",
-            }}
-          >
-            <ListItemIcon
+    //sx={{ display: { xl: "block", xs: "none" } }}
+    <Grid>
+      <Drawer
+        variant="permanent"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <DrawerHeader sx={{ height: 64 }}>
+          <IconButton onClick={handleDrawerSlide}>
+            {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          </IconButton>
+        </DrawerHeader>
+        <Divider />
+        <List>
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
               sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
+                minHeight: 46,
+                justifyContent: open ? "start" : "center",
               }}
             >
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Panels"} sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
-        </ListItem>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 6 }}>
-              <ListItemIcon>
-                <ArrowForwardIosIcon sx={{ scale: "0.6" }} />
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <DashboardIcon />
               </ListItemIcon>
-              <ListItemText primary="Case Study" />
+              <ListItemText primary={"Panels"} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
-            <ListItemButton sx={{ pl: 6 }}>
-              <ListItemIcon>
-                <AddIcon />
-              </ListItemIcon>
-              <ListItemText primary="Add New" />
-            </ListItemButton>
-          </List>
-        </Collapse>
-      </List>
-      <Divider />
-    </Drawer>
+          </ListItem>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ pl: 6 }}>
+                <ListItemIcon>
+                  <ArrowForwardIosIcon sx={{ scale: "0.6" }} />
+                </ListItemIcon>
+                <ListItemText primary="Case Study" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 6, cursor: "not-allowed" }}>
+                <ListItemIcon>
+                  <AddIcon />
+                </ListItemIcon>
+                <ListItemText primary="Add New" />
+              </ListItemButton>
+            </List>
+          </Collapse>
+        </List>
+        <Divider />
+      </Drawer>
+    </Grid>
   );
 }

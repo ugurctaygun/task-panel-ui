@@ -7,6 +7,9 @@ import {
   TextField,
   Modal,
   Grid,
+  Typography,
+  Divider,
+  Button,
 } from "@mui/material";
 import useStyles from "./style";
 import ErrorIcon from "@mui/icons-material/Error";
@@ -76,21 +79,34 @@ export default function TaskModal() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <Grid sx={{ display: "flex" }}>
+            <Grid>
+              <Grid
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Typography variant="subtitle2">Title</Typography>
+                <ActionMenu handleDelete={handleDelete} />
+              </Grid>
+
               <InputBase
                 style={{
                   width: "100%",
                   fontSize: "22px",
                 }}
                 sx={{ color: "text.primary" }}
-                placeholder="Enter Title"
-                inputProps={{ "aria-label": "Title" }}
+                placeholder="Enter Title &#x270E;"
+                inputProps={{
+                  "aria-label": "Title",
+                }}
                 onChange={(event) =>
                   updateItemOnChange({ title: event.target.value }, "title")
                 }
                 value={content.title}
               />
-              <ActionMenu handleDelete={handleDelete} />
+              <Divider />
             </Grid>
 
             <FormControl className={classes.formControl}>
@@ -137,23 +153,31 @@ export default function TaskModal() {
                 deadline={content.deadline}
               />
             </FormControl>
-
-            <InputBase
-              style={{
-                width: "100%",
-              }}
-              sx={{ color: "text.primary" }}
-              placeholder="Enter Description"
-              multiline
-              inputProps={{ "aria-label": "Description" }}
-              onChange={(event) =>
-                updateItemOnChange(
-                  { description: event.target.value },
-                  "description"
-                )
-              }
-              value={content.description}
-            />
+            <Divider />
+            <Grid sx={{ mt: 2 }}>
+              <Typography variant="subtitle2">Description</Typography>
+              <InputBase
+                style={{
+                  width: "100%",
+                }}
+                sx={{ color: "text.primary" }}
+                placeholder="Enter Description &#x270E;"
+                multiline
+                inputProps={{ "aria-label": "Description" }}
+                onChange={(event) =>
+                  updateItemOnChange(
+                    { description: event.target.value },
+                    "description"
+                  )
+                }
+                value={content.description}
+              />
+            </Grid>
+            <Grid sx={{ display: "flex", justifyContent: "flex-end" }}>
+              <Button variant="contained" onClick={handleModalClose}>
+                Save
+              </Button>
+            </Grid>
           </Box>
         </Modal>
       </div>

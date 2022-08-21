@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/styles";
 const useStyles = makeStyles((_theme) => ({
   numberInput: {
     padding: 0,
-    margin: "3px 0 0  5px",
     maxWidth: "40px",
   },
   selectInput: {
@@ -16,6 +15,9 @@ const useStyles = makeStyles((_theme) => ({
     flexDirection: "row",
     alignItems: "center",
     margin: "15px 0 ",
+    "& input": {
+      padding: "6px 15px",
+    },
   },
 }));
 

@@ -8,23 +8,18 @@ import { Box } from "@mui/system";
 import TaskModal from "./components/TaskModal";
 
 function App() {
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const theme = useSelector((state) => state.user.theme);
   const selectedTheme = createTheme({
     palette: {
       mode: theme,
     },
   });
-  const handleDrawer = () => {
-    setDrawerOpen((current) => !current);
-  };
   return (
     <ThemeProvider theme={selectedTheme}>
-      <Header handleDrawer={handleDrawer} />
+      <Header />
 
       <Box
         style={{
-          marginLeft: drawerOpen ? "240px" : "65px",
           minHeight: "100vh",
           transition: "0.2s all ease",
           background: selectedTheme.palette.background.default,

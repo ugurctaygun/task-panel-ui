@@ -38,9 +38,10 @@ export default function Panel() {
             borderColor: "divider",
             display: "flex",
             alignItems: "center",
+            pl: 4,
           }}
         >
-          <FormControl sx={{ m: 1, minWidth: 120, pl: 3 }} size="small">
+          <FormControl sx={{ minWidth: 120 }} size="small">
             <Select
               value={view}
               onChange={handleViewChange}
@@ -55,10 +56,16 @@ export default function Panel() {
             </Select>
           </FormControl>
           <Typography sx={{ m: 2, color: "text.primary" }} variant="h5">
-            Case Study
+            Case Study Panel
           </Typography>
         </Grid>
-        <Box sx={{ borderBottom: 1, borderColor: "divider", p: 4 }}>
+        <Box
+          sx={{
+            borderBottom: 1,
+            borderColor: "divider",
+            p: { xs: "15px 0", xl: 4 },
+          }}
+        >
           {renderViews(view)}
         </Box>
       </Box>
