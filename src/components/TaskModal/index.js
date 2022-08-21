@@ -1,6 +1,11 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
+import { MenuItem, FormControl, Tooltip } from "@material-ui/core";
+import { InputBase, Select, InputLabel, TextField, Modal } from "@mui/material";
+import useStyles from "./style";
+import { useState } from "react";
+import ErrorIcon from "@mui/icons-material/Error";
+import DatePicker from "../DatePicker";
 
 const style = {
   position: "absolute",
@@ -16,6 +21,11 @@ const style = {
 };
 
 export default function TaskModal({ modalOpen, handleModalClose, content }) {
+  const classes = useStyles();
+  const [value, setValue] = useState("Not Completed");
+  const handleStatus = (event) => {
+    setValue(event.target.value);
+  };
   return (
     <div>
       <Modal
@@ -28,9 +38,51 @@ export default function TaskModal({ modalOpen, handleModalClose, content }) {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             {content}
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <FormControl className={classes.formControl}>
+            <InputLabel sx={{ mr: "5px" }}>Points :</InputLabel>
+            <TextField
+              type="number"
+              placeholder="0"
+              name="test"
+              inputProps={{
+                "aria-label": "Sprint Point",
+                max: "10",
+                className: classes.numberInput,
+              }}
+            />
+            <Tooltip sx={{ ml: 1 }} title="Point the effort of your task">
+              <ErrorIcon />
+            </Tooltip>
+          </FormControl>
+          <FormControl className={classes.formControl}>
+            <InputLabel sx={{ mr: "5px" }}>Status :</InputLabel>
+            <Select
+              value={value}
+              variant="outlined"
+              inputProps={{
+                className: classes.selectInput,
+              }}
+              sx={{ color: "text.primary" }}
+              onChange={handleStatus}
+            >
+              <MenuItem value={"Not Completed"}>Not Completed</MenuItem>
+              <MenuItem value={"Done"}>Done</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl className={classes.formControl}>
+            <InputLabel sx={{ mr: "5px" }}>Deadline : </InputLabel>
+            <DatePicker />
+          </FormControl>
+
+          <InputBase
+            style={{
+              width: "100%",
+            }}
+            sx={{ color: "text.primary" }}
+            placeholder="Enter Description"
+            multiline
+            inputProps={{ "aria-label": "Description" }}
+          />
         </Box>
       </Modal>
     </div>

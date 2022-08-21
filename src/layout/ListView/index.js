@@ -118,7 +118,6 @@ export default function ListView() {
     <Box
       sx={{
         maxWidth: "70%",
-        margin: " auto",
       }}
     >
       <TableContainer

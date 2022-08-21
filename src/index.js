@@ -31,6 +31,7 @@ if (persistedState) {
 
 store.subscribe(() => {
   saveState(store.getState());
+  console.log(store.getState());
 });
 
 ReactDOM.render(

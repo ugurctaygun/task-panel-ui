@@ -14,6 +14,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@material-ui/core/Collapse";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import AddIcon from "@mui/icons-material/Add";
 
 const drawerWidth = 240;
 
@@ -90,9 +91,8 @@ export default function NavDrawer({ handleDrawer }) {
         <ListItem disablePadding sx={{ display: "block" }}>
           <ListItemButton
             sx={{
-              minHeight: 56,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
+              minHeight: 46,
+              justifyContent: open ? "start" : "center",
             }}
           >
             <ListItemIcon
@@ -109,11 +109,17 @@ export default function NavDrawer({ handleDrawer }) {
         </ListItem>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton sx={{ pl: 6 }}>
               <ListItemIcon>
                 <ArrowForwardIosIcon sx={{ scale: "0.6" }} />
               </ListItemIcon>
-              <ListItemText primary="Starred" />
+              <ListItemText primary="Case Study" />
+            </ListItemButton>
+            <ListItemButton sx={{ pl: 6 }}>
+              <ListItemIcon>
+                <AddIcon />
+              </ListItemIcon>
+              <ListItemText primary="Add New" />
             </ListItemButton>
           </List>
         </Collapse>

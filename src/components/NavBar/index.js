@@ -20,7 +20,7 @@ export default function NavBar() {
   };
   return (
     <Box sx={{ display: "flex", mb: "64px" }}>
-      <AppBar position="fixed">
+      <AppBar position="fixed" sx={{ boxShadow: "none" }}>
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Task Panel
