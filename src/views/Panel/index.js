@@ -7,6 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Outlet } from "react-router-dom";
+import Report from "../../layout/Report";
 
 const renderViews = (view) => {
   switch (view) {
@@ -15,8 +16,7 @@ const renderViews = (view) => {
     case "List":
       return <ListView />;
     case "Report":
-      <BoardView />;
-      break;
+      return <Report />;
     default:
       break;
   }

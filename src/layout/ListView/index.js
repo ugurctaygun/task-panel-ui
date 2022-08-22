@@ -108,7 +108,7 @@ export default function ListView() {
   return (
     <Box
       sx={{
-        maxWidth: "700px",
+        maxWidth: "900px",
       }}
     >
       <TableContainer
