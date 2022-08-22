@@ -167,7 +167,7 @@ export default function ListView() {
                       ? row.description.substring(0, 50) + "..."
                       : row.description}
                   </TableCell>
-                  <TableCell>{row.point}</TableCell>
+                  <TableCell>{row.points}</TableCell>
                 </TableRow>
               </>
             ))}

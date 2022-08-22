@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import ActionMenu from "../ActionMenu";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
+import { toast } from "react-toastify";
 
 export default function TaskModal() {
   let { id } = useParams();
@@ -54,10 +55,16 @@ export default function TaskModal() {
   const handleDelete = () => {
     dispatch(deleteTask(content._id));
     navigate("/");
+    toast.warning("Task Deleted !", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
   };
   const handleSave = () => {
     dispatch(updateTask(content));
     navigate("/");
+    toast.success("Task Saved !", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
   };
   const updateItemOnChange = (key, value) => {
     const newContent = { ...content, [key]: value };

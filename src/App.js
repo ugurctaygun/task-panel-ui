@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@mui/system";
 import TaskModal from "./components/TaskModal";
 import { getAllTasks } from "./store/slices/taskSlice";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const theme = useSelector((state) => state.user.theme);
@@ -37,6 +39,7 @@ function App() {
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        <ToastContainer autoClose={3000} />
       </Box>
     </ThemeProvider>
   );
