@@ -16,8 +16,10 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import { useSelector } from "react-redux";
-import { Chip } from "@mui/material";
+import { Button, Chip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { createTask } from "../../store/slices/taskSlice";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -84,11 +86,23 @@ function TablePaginationActions(props) {
 export default function ListView() {
   const tasks = useSelector((state) => state.tasks.value);
   let navigate = useNavigate();
+  let dispatch = useDispatch();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleModalOpen = (id) => {
     navigate(`/panel/${id}`);
+  };
+
+  const handleAddTask = () => {
+    const newTaskObject = {
+      title: "",
+      description: "",
+      points: 0,
+      status: "to-do",
+      deadline: null,
+    };
+    dispatch(createTask(newTaskObject));
   };
 
   const emptyRows =
@@ -165,7 +179,17 @@ export default function ListView() {
             )}
           </TableBody>
           <TableFooter>
-            <TableRow sx={{ width: "100%" }}>
+            <TableRow>
+              <Box>
+                <Button
+                  onClick={handleAddTask}
+                  variant="contained"
+                  size="small"
+                  sx={{ m: "15px 0 15px 15px", width: "150px" }}
+                >
+                  Add New Task
+                </Button>
+              </Box>
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                 count={tasks.taskList.length}

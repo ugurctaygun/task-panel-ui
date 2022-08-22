@@ -6,7 +6,7 @@ const useStyles = makeStyles((_theme) => ({
     maxWidth: "40px",
   },
   selectInput: {
-    padding: "5px",
+    padding: "6px 14px",
     marginLeft: "5px",
     minWidth: "120px",
   },
@@ -16,6 +16,9 @@ const useStyles = makeStyles((_theme) => ({
     alignItems: "center",
     margin: "15px 0 ",
     "& input": {
+      padding: "6px 15px",
+    },
+    "& select": {
       padding: "6px 15px",
     },
   },

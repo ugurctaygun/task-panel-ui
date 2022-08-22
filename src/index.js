@@ -7,10 +7,14 @@ import taskReducer from "./store/slices/taskSlice";
 import { updateState } from "./store/slices/taskSlice";
 import userReducer from "./store/slices/userSlice";
 import { updateTheme } from "./store/slices/userSlice";
+import createSagaMiddleware from "redux-saga";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
+import taskSaga from "./store/sagas";
 
 const persistedState = loadState();
+
+const saga = createSagaMiddleware();
 
 const store = configureStore({
   persistedState,
@@ -18,7 +22,9 @@ const store = configureStore({
     tasks: taskReducer,
     user: userReducer,
   },
+  middleware: [saga],
 });
+saga.run(taskSaga);
 
 if (persistedState) {
   let { taskList } = persistedState.tasks.value;

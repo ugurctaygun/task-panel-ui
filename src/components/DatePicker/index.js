@@ -6,12 +6,10 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 
 export default function DatePicker({ deadlineHandler, deadline }) {
-  console.log(deadline);
   const [value, setValue] = React.useState(Date.now());
   const today = new Date();
 
   const handleChange = (newValue) => {
-    console.log(newValue);
     setValue(newValue);
     deadlineHandler(newValue);
   };

@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from "uuid";
 
 export const taskSlice = createSlice({
   name: "tasks",
@@ -7,39 +6,48 @@ export const taskSlice = createSlice({
     value: {
       taskList: [],
     },
+    isLoading: true,
   },
   reducers: {
+    getAllTasks: (state) => {},
+    getTasksSuccess: (state, action) => {
+      state.value.taskList = action.payload;
+      state.isLoading = false;
+    },
     updateState: (state, action) => {
       state.value = { ...action.payload };
     },
     createTask: (state, action) => {
-      let newId = uuidv4();
-      const newTaskObject = {
-        id: newId,
-        taskId: "CASE-" + newId.substring(0, 4),
-        title: "",
-        description: "",
-        points: 0,
-        status: "to-do",
-        deadline: null,
-      };
-      state.value.taskList.push(newTaskObject);
+      state.isLoading = true;
+    },
+    createTaskSuccess: (state, action) => {
+      state.isLoading = false;
     },
     updateTask: (state, action) => {
-      const { id, item, key } = action.payload;
-      let selectedItem = state.value.taskList.find((item) => item.id === id);
-      selectedItem[key] = item[key];
+      state.isLoading = true;
+    },
+    updateTaskSuccess: (state, action) => {
+      state.isLoading = false;
     },
     deleteTask: (state, action) => {
-      const { id } = action.payload;
-      state.value.taskList = state.value.taskList.filter(
-        (item) => item.id !== id
-      );
+      state.isLoading = true;
+    },
+    deleteTaskSuccess: (state, action) => {
+      state.isLoading = false;
     },
   },
 });
 
-export const { updateState, createTask, updateTask, deleteTask } =
-  taskSlice.actions;
+export const {
+  getAllTasks,
+  getTasksSuccess,
+  updateState,
+  createTask,
+  createTaskSuccess,
+  updateTask,
+  updateTaskSuccess,
+  deleteTask,
+  deleteTaskSuccess,
+} = taskSlice.actions;
 
 export default taskSlice.reducer;

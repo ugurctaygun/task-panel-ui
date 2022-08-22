@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
-import { CardActions, CardHeader, IconButton } from "@mui/material";
+import { Button, CardActions, CardHeader, IconButton } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { useNavigate } from "react-router-dom";
 
@@ -46,7 +46,15 @@ export default function TaskCard({ content }) {
           sx={{ pb: 0 }}
         />
         <CardContent>
-          <Typography>{content.title ? content.title : "Edit task"}</Typography>
+          <Typography>
+            {content.title ? (
+              content.title
+            ) : (
+              <Button variant="contained" color="warning">
+                Edit Task
+              </Button>
+            )}
+          </Typography>
         </CardContent>
         {deadlineCondition() && (
           <CardActions>
