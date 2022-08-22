@@ -118,7 +118,6 @@ export default function ListView() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
   return (
     <Box
       sx={{
@@ -140,37 +139,33 @@ export default function ListView() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {(tasks.taskList > 0
-              ? tasks.taskList.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
-              : tasks.taskList
-            ).map((row) => (
-              <>
-                <TableRow
-                  key={row.name}
-                  onClick={() => handleModalOpen(row.taskId)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <TableCell>
-                    {row.status !== "done" ? (
-                      <Chip label="Incomplete" color="error" />
-                    ) : (
-                      <Chip label="Done" color="success" />
-                    )}
-                  </TableCell>
-                  <TableCell>{row.taskId}</TableCell>
-                  <TableCell>{row.title}</TableCell>
-                  <TableCell>
-                    {row.description.length > 50
-                      ? row.description.substring(0, 50) + "..."
-                      : row.description}
-                  </TableCell>
-                  <TableCell>{row.points}</TableCell>
-                </TableRow>
-              </>
-            ))}
+            {tasks.taskList
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row) => (
+                <>
+                  <TableRow
+                    key={row.id}
+                    onClick={() => handleModalOpen(row.taskId)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <TableCell>
+                      {row.status !== "done" ? (
+                        <Chip label="Incomplete" color="error" />
+                      ) : (
+                        <Chip label="Done" color="success" />
+                      )}
+                    </TableCell>
+                    <TableCell>{row.taskId}</TableCell>
+                    <TableCell>{row.title}</TableCell>
+                    <TableCell>
+                      {row.description.length > 50
+                        ? row.description.substring(0, 50) + "..."
+                        : row.description}
+                    </TableCell>
+                    <TableCell>{row.points}</TableCell>
+                  </TableRow>
+                </>
+              ))}
 
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>
