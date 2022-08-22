@@ -14,12 +14,11 @@ export default function BoardView() {
     if (!result.destination) return;
     const { source, destination, draggableId } = result;
     if (source.droppableId !== destination.droppableId) {
-      dispatch(
-        updateTask(
-          JSON.stringify({ status: destination.droppableId }),
-          draggableId
-        )
-      );
+      let jsonObject = {
+        status: destination.droppableId,
+        _id: draggableId,
+      };
+      dispatch(updateTask(jsonObject));
     }
   };
 
@@ -74,45 +73,33 @@ export default function BoardView() {
                       >
                         To Do
                       </Typography>
-                      {isLoading ? (
-                        <Box
-                          sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            minHeight: "350px",
-                          }}
-                        >
-                          <CircularProgress />
-                        </Box>
-                      ) : (
-                        tasks.taskList
-                          .filter((task) => task.status === "to-do")
-                          .map((item, index) => {
-                            return (
-                              <Draggable
-                                key={item._id}
-                                draggableId={item._id}
-                                index={index}
-                              >
-                                {(provided, snapshot) => {
-                                  return (
-                                    <div
-                                      ref={provided.innerRef}
-                                      {...provided.draggableProps}
-                                      {...provided.dragHandleProps}
-                                    >
-                                      <TaskCard
-                                        content={item}
-                                        isDragging={snapshot.isDragging}
-                                      />
-                                    </div>
-                                  );
-                                }}
-                              </Draggable>
-                            );
-                          })
-                      )}
+                      {tasks.taskList
+                        .filter((task) => task.status === "to-do")
+                        .map((item, index) => {
+                          return (
+                            <Draggable
+                              key={item._id}
+                              draggableId={item._id}
+                              index={index}
+                            >
+                              {(provided, snapshot) => {
+                                return (
+                                  <div
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                  >
+                                    <TaskCard
+                                      content={item}
+                                      isDragging={snapshot.isDragging}
+                                    />
+                                  </div>
+                                );
+                              }}
+                            </Draggable>
+                          );
+                        })}
+
                       {provided.placeholder}
                       <CardActions>
                         <Button

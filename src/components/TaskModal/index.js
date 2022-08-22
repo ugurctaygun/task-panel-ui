@@ -55,8 +55,8 @@ export default function TaskModal() {
     dispatch(deleteTask(content._id));
     navigate("/");
   };
-  const handleSave = (id) => {
-    dispatch(updateTask(content, id));
+  const handleSave = () => {
+    dispatch(updateTask(content));
     navigate("/");
   };
   const updateItemOnChange = (key, value) => {
@@ -117,9 +117,9 @@ export default function TaskModal() {
                 className: classes.numberInput,
               }}
               onChange={(event) =>
-                updateItemOnChange("point", event.target.value)
+                updateItemOnChange("points", Number(event.target.value))
               }
-              value={content.point}
+              value={content.points}
             />
             <Tooltip sx={{ ml: 1 }} title="Point the effort of your task">
               <ErrorIcon />
