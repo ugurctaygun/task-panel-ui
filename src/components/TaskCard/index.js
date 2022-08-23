@@ -18,7 +18,7 @@ export default function TaskCard({ content }) {
       const endDate = today;
 
       const diffInMs = new Date(endDate) - new Date(startDate);
-      const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+      const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24)) + 1;
       return diffInDays;
     }
   };
@@ -30,6 +30,18 @@ export default function TaskCard({ content }) {
       return true;
     } else {
       return false;
+    }
+  };
+  const renderDeadlineWarning = () => {
+    let daysLeft = formatDate();
+    if (daysLeft < 0) {
+      return "Overdue";
+    } else if (daysLeft === 0) {
+      return "Delivery Day";
+    } else if (daysLeft === 1) {
+      return "1 day left";
+    } else if (daysLeft > 1) {
+      return `${daysLeft} days left`;
     }
   };
   return (
@@ -61,7 +73,7 @@ export default function TaskCard({ content }) {
             <>
               <AccessTimeIcon sx={{ scale: "0.8", mr: 1 }} />
               <Typography variant="subtitle2">
-                {formatDate() < 0 ? "Overdue" : formatDate() + " day left"}
+                {renderDeadlineWarning()}
               </Typography>
             </>
           </CardActions>
